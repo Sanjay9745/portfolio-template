@@ -18,7 +18,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-mongoose.connect("mongodb://127.0.0.1:27017/nodejs");
+mongoose.connect(process.env.MONGODB_URI);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
