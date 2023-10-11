@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%=name%></title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <h1><%=logo%></h1>
+        </div>
+     
+          <ul>
+            <div class="navbar">
+
+              <li><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </div>
+          </ul>
+        
+        <i class="fa-solid fa-bars"></i>
+      </nav>
+    </header>
+    <main>
+      <h2>Hi I'm <%=name%></h2>
+      <button class="btn"><a href=<%=cvLink%> target="__blank">Download CV</a></button>
+    </main>
+    <div class="about" id="about">
+      <h2>About Me</h2>
+      <p>
+        <%=about%>
+      </p>
+    </div>
+    <div class="skills" id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li><%=skill1%></li>
+        <li><%=skill2%></li>
+        <li><%=skill3%></li>
+      </ul>
+    </div>
+    <footer id="contact">
+      <div class="top-footer">
+        <h2>Contact</h2>
+        <div class="contact">
+          <ul>
+            <li><i class="fa-solid fa-phone"></i>+<%=phone%></li>
+            <li>
+              <i class="fa-solid fa-envelope"></i><%=email%>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-footer">
+        <p>Created By <%=name%></p>
+      </div>
+    </footer>
+    <script>
+      const burger = document.querySelector(".fa-bars");
+      const nav = document.querySelector("nav ul");
+      burger.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

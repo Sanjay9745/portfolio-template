@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sanjay</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./public/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <h1>Sanjay</h1>
+        </div>
+     
+          <ul>
+            <div class="navbar">
+
+              <li><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </div>
+          </ul>
+        
+        <i class="fa-solid fa-bars"></i>
+      </nav>
+    </header>
+    <main>
+      <h2>Hi I'm Sanjay Santhosh</h2>
+    </main>
+    <div class="about" id="about">
+      <h2>About Me</h2>
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis fugit
+        porro numquam debitis sunt ipsa eveniet consectetur nisi corrupti,
+        dolorem mollitia est illo unde explicabo enim laborum molestias natus
+        adipisci esse impedit molestiae ipsum nulla vitae. Id sint, voluptatem
+        impedit repudiandae beatae blanditiis quisquam adipisci repellat iure!
+        Ex vero praesentium quo veritatis, officia nulla laboriosam cumque unde
+        autem laudantium in dolorum iure officiis quisquam fugiat consectetur
+        architecto dicta eaque eius eveniet dolores sunt molestiae earum quos.
+        Ab, dolorum ullam, earum laboriosam sapiente provident explicabo illo,
+        culpa at officiis quam minima delectus corrupti ratione. Eum adipisci
+        optio, animi doloremque quia maiores.
+      </p>
+    </div>
+    <div class="skills" id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li>Coding</li>
+        <li>Designing</li>
+      </ul>
+    </div>
+    <footer id="contact">
+      <div class="top-footer">
+        <h2>Contact</h2>
+        <div class="contact">
+          <ul>
+            <li><i class="fa-solid fa-phone"></i>+91 99999999999</li>
+            <li>
+              <i class="fa-solid fa-envelope"></i>sanjaysanthosh919@gmail.com
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-footer">
+        <p>Created By Sanjay Santhosh</p>
+      </div>
+    </footer>
+    <script>
+      const burger = document.querySelector(".fa-bars");
+      const nav = document.querySelector("nav ul");
+      burger.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

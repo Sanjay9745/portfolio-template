@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/form.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h4 style="text-align:center">We'd love to hear from you!</h4>
+        </div>
+        <form action="/form" method="post" class="row input-container">
+            <div class="col-xs-12">
+                <div class="styled-input wide">
+                    <input type="text" required name="logo"/>
+                    <label>Logo Name</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="styled-input wide">
+                    <input type="text" required name="name"/>
+                    <label>Name</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="styled-input wide">
+                    <input type="text" required name="skill1"/>
+                    <label>Skill 1</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="styled-input wide">
+                    <input type="text" required name="skill2"/>
+                    <label>Skill 2</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="styled-input wide">
+                    <input type="text" required name="skill3"/>
+                    <label>Skill 3</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="styled-input wide">
+                    <textarea required name="about"></textarea>
+                    <label>About</label>
+                </div>
+            </div>
+          
+
+            <div class="col-md-6 col-sm-12">
+                <div class="styled-input">
+                    <input type="email" name="email" required />
+                    <label>Email</label>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="styled-input" style="float:right;">
+                    <input type="text" required name="phone"/>
+                    <label>Phone Number</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="styled-input wide" style="float:right;">
+                    <input type="text" required name="cvLink"/>
+                    <label>CV Link</label>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <input type="submit" value="Submit" class="btn-lrg submit-btn">
+               
+            </div>
+        </form>
+    </div>
+</body>
+</html>
