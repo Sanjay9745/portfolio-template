@@ -25,32 +25,42 @@
                     <label>Name</label>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <div class="styled-input wide">
-                    <input type="text" required name="skill1"/>
-                    <label>Skill 1</label>
+            <div class="skills-section">
+                <!-- Keep skill input as is -->
+                <div class="col-xs-12">
+                    <div class="styled-input wide">
+                        <input type="text" required name="skills[]" />
+                        <label>Skill</label>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <div class="styled-input wide">
-                    <input type="text" required name="skill2"/>
-                    <label>Skill 2</label>
+            <button class="add-skill-btn">+</button>
+            <button class="remove-skill-btn">-</button>
+            <div class="projects-section">
+                <div class="project-card col-xs-12">
+                    <h2>Project 1</h2>
+                    <div class="styled-input wide">
+                        <input type="text" required name="projects[0][image]" />
+                        <label>Image URL</label>
+                    </div>
+                    <div class="styled-input wide">
+                        <input type="text" required name="projects[0][projectName]" />
+                        <label>Project Name</label>
+                    </div>
+                    <div class="styled-input wide">
+                        <input type="text" required name="projects[0][projectLink]" />
+                        <label>Project Link</label>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <div class="styled-input wide">
-                    <input type="text" required name="skill3"/>
-                    <label>Skill 3</label>
-                </div>
-            </div>
+            <button class="add-project-btn">Add Project</button>
+            <button class="remove-project-btn">Remove Project</button>
             <div class="col-xs-12">
                 <div class="styled-input wide">
                     <textarea required name="about"></textarea>
                     <label>About</label>
                 </div>
             </div>
-          
-
             <div class="col-md-6 col-sm-12">
                 <div class="styled-input">
                     <input type="email" name="email" required />
@@ -71,9 +81,72 @@
             </div>
             <div class="col-xs-12">
                 <input type="submit" value="Submit" class="btn-lrg submit-btn">
-               
             </div>
         </form>
     </div>
+
+    <script>
+        const addSkillButton = document.querySelector('.add-skill-btn');
+        const removeSkillButton = document.querySelector('.remove-skill-btn');
+        const addProjectButton = document.querySelector('.add-project-btn');
+        const removeProjectButton = document.querySelector('.remove-project-btn');
+        const skillsSection = document.querySelector('.skills-section');
+        const projectsSection = document.querySelector('.projects-section');
+        let skillCounter = 2;
+        let projectCounter = 2;
+    
+        addSkillButton.addEventListener('click', () => {
+            if (skillCounter <= 8) {
+                const skillInput = document.createElement('div');
+                skillInput.className = 'col-xs-12';
+                skillInput.innerHTML = `
+                    <div class="styled-input wide">
+                        <input type="text" required name="skills[]" />
+                        <label>Skill</label>
+                    </div>
+                `;
+                skillsSection.appendChild(skillInput);
+                skillCounter++;
+            }
+        });
+    
+        removeSkillButton.addEventListener('click', () => {
+            if (skillCounter > 2) {
+                skillCounter--;
+                const skillInput = skillsSection.lastElementChild;
+                skillsSection.removeChild(skillInput);
+            }
+        });
+    
+        addProjectButton.addEventListener('click', () => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card col-xs-12';
+            projectCard.innerHTML = `
+                <h2>Project ${projectCounter}</h2>
+                <div class="styled-input wide">
+                    <input type="text" required name="projects[${projectCounter}][image]" />
+                    <label>Image URL</label>
+                </div>
+                <div class="styled-input wide">
+                    <input type="text" required name="projects[${projectCounter}][projectName]" />
+                    <label>Project Name</label>
+                </div>
+                <div class="styled-input wide">
+                    <input type="text" required name="projects[${projectCounter}][projectLink]" />
+                    <label>Project Link</label>
+                </div>
+            `;
+            projectsSection.appendChild(projectCard);
+            projectCounter++;
+        });
+    
+        removeProjectButton.addEventListener('click', () => {
+            if (projectCounter > 2) {
+                projectCounter--;
+                const projectCard = projectsSection.lastElementChild;
+                projectsSection.removeChild(projectCard);
+            }
+        });
+    </script>
 </body>
 </html>

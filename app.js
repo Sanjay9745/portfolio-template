@@ -5,8 +5,9 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
-
+const pdf = require('html-pdf');
+const ejs = require('ejs');
+const fs = require('fs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,15 +30,18 @@ const userSchema = new mongoose.Schema({
     password: String,
     name: String,
     logo: String,
-    skill1: String,
-    skill2: String,
-    skill3: String,
+    skills: [String], // An array to store skills
     about: String,
     email: String,
     phone: String,
     cvLink: String,
+    projects: [{
+        image: String,
+        projectName: String,
+        projectLink: String
+    }] // An array of project objects
+});
 
-})
 
 const User = mongoose.model("User", userSchema);
 
@@ -53,19 +57,19 @@ app.get("/",auth,(req,res)=>{
     res.render("form")
 })
 app.get("/login",(req,res)=>{
-    res.render("login")
+    res.render("login",{error:""})
 })
 app.get("/register",(req,res)=>{
-    res.render("register")
+    res.render("register",{error:""})
 })
 app.get("/:username",async(req,res)=>{
     const {username} = req.params;
     const user =await User.findOne({username});
     if(!user){
-        return res.status(404).send("User not found")
+        return res.render("login",{error:""})
     }
-    const {name,logo,skill1,skill2,skill3,about,email,phone,cvLink} = user
-    res.render("preview",{name,logo,skill1,skill2,skill3,about,email,phone,cvLink})
+    const {name,logo,skills,about,email,phone,cvLink,projects} = user
+    res.render("preview",{name,logo,skills,about,email,phone,cvLink,projects})
 })
 
 app.post("/register",async(req,res)=>{
@@ -74,7 +78,7 @@ app.post("/register",async(req,res)=>{
         const {username,password} = req.body;
         const user = await User.findOne({username:username});
         if(user){
-            return res.status(400).send("Username already exists")
+            return res.render("register",{error:"User Already Exist"})
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
@@ -94,11 +98,11 @@ app.post("/login",async(req,res)=>{
         const {username,password} = req.body;
         const user = await User.findOne({username});
         if(!user){
-            return res.status(404).send("Username not Exist")
+            return res.render("login",{error:"No user found"})
         }
         const isMatch = await bcrypt.compare(password,user.password);
         if(!isMatch){
-            return res.status(401).send("Wrong Password")
+            return res.render("login",{error:"Wrong Password"})
         }
         req.session.username = user.username;
         res.redirect("/");
@@ -107,34 +111,135 @@ app.post("/login",async(req,res)=>{
         res.status(500).json({message:"Something went wrong"})
     }
 })
+app.post("/form", async (req, res) => {
+    const formData = req.body;
 
-app.post("/form",auth,async(req,res)=>{
     try {
-        const {name,logo,skill1,skill2,skill3,about,email,phone,cvLink} = req.body;
-        const user = await User.findOne({username:req.session.username});
-        if(!user){
-            return res.status(404).send("User not found")
-        }
-        user.name = name;
-        user.logo = logo;
-        user.skill1 = skill1;
-        user.skill2 = skill2;
-        user.skill3 = skill3;
-        user.about= about;
-        user.email = email;
-        user.phone = phone;
-        user.cvLink=cvLink;
-        await user.save();
-        res.redirect("/"+req.session.username)
+        // Find the user by username
+        const user = await User.findOne({ username: req.session.username });
 
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        // Update user properties based on form data
+        for (const key in formData) {
+            if (key === "skills") {
+                // Handle skills as an array
+                user.skills = Array.isArray(formData.skills)
+                    ? formData.skills
+                    : [formData.skills];
+            } else if (key.startsWith("projects[")) {
+                // Handle projects as an array of objects
+                const projectIndex = key.match(/\d+/)[0];
+                if (!user.projects) {
+                    user.projects = [];
+                }
+                user.projects[projectIndex] = user.projects[projectIndex] || {};
+                user.projects[projectIndex][key.replace(/\[.*\]/, "")] =
+                    formData[key];
+            } else {
+                // Handle other fields
+                user[key] = formData[key];
+            }
+        }
+
+        // Remove any undefined projects from the array
+        user.projects = user.projects.filter(Boolean);
+
+        // Save the updated user data to the database
+        await user.save();
+
+        res.redirect("/" + req.session.username);
     } catch (error) {
-        res.status(500).json({message:"Something went wrong"})
+        res.status(500).json({ message: "Something went wrong" });
     }
-})
+});
+app.get("/pdf/:username", async (req, res) => {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+    
+    if (!user) {
+      return res.render("login", { error: "" });
+    }
+  
+    const { name, logo, skills, about, email, phone, cvLink, projects } = user;
+  
+    // Render the EJS template with the data
+    ejs.renderFile('./views/preview.ejs', { name, logo, skills, about, email, phone, cvLink, projects }, (err, html) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Error rendering EJS template');
+      }
+  
+      // Create a temporary HTML file
+      const tempHtmlFile = 'temp.html';
+      fs.writeFileSync(tempHtmlFile, html);
+  
+      // Define the PDF options
+      const pdfOptions = {
+        format: 'Letter',
+        orientation: 'portrait',
+        base: 'file://' + __dirname + '/public' // This assumes your CSS file is in the public directory
+      };
+  
+      // Generate the PDF
+      pdf.create(html, pdfOptions).toFile('output.pdf', (pdfErr, pdfRes) => {
+        if (pdfErr) {
+          console.error(pdfErr);
+          return res.status(500).send('Error generating PDF');
+        }
+  
+        // Serve the generated PDF as a download
+        res.setHeader('Content-Disposition', 'attachment; filename=preview.pdf');
+        res.setHeader('Content-type', 'application/pdf');
+        fs.createReadStream('output.pdf').pipe(res);
+      });
+    });
+  });
+  const customCss = fs.readFileSync('public/css/style.css', 'utf8');
+
+  // Your route to generate and send HTML to the user
+  app.get("/generate/:username", async (req, res) => {
+    const { username } = req.params;
+    const user = await User.findOne({ username });
+  
+    if (!user) {
+      return res.render("login", { error: "" });
+    }
+  
+    const { name, logo, skills, about, email, phone, cvLink, projects } = user;
+  
+    // Render the EJS template with the data
+    ejs.renderFile('./views/preview.ejs', { name, logo, skills, about, email, phone, cvLink, projects }, (err, html) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Error rendering EJS template');
+      }
+  
+      // Combine the HTML and the custom CSS
+      const combinedHtml = `
+        <html>
+        <head>
+          <style>${customCss}
+          
+          </style>
+        </head>
+        <body>
+          ${html}
+        </body>
+        </html>
+      `;
+  
+      // Send the combined HTML to the user 
+      res.setHeader('Content-Disposition', 'attachment; filename=generated.html');
+      res.setHeader('Content-type', 'text/html');
+      res.send(combinedHtml);
+    });
+  });
 app.listen(3000,(err)=>{
 if(err){
     console.log("error occured")
 }
 console.log("Server Running on Port 3000")
 })
-

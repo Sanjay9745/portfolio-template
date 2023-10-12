@@ -21,9 +21,10 @@
           <ul>
             <div class="navbar">
 
-              <li><a href="#">Home</a></li>
+              <li><a href="#home">Home</a></li>
               <li><a href="#about">About</a></li>
               <li><a href="#skills">Skills</a></li>
+              <li><a href="#projects">Projects</a></li>
               <li><a href="#contact">Contact</a></li>
             </div>
           </ul>
@@ -31,12 +32,13 @@
         <i class="fa-solid fa-bars"></i>
       </nav>
     </header>
-    <main>
+    <main id="home" class="animate">
       <h2>Hi I'm Sanjay Santhosh</h2>
+      <button class="btn"><a href="" target="__blank">Download CV</a></button>
     </main>
-    <div class="about" id="about">
+    <div class="about animate " id="about">
       <h2>About Me</h2>
-      <p>
+      <p >
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis fugit
         porro numquam debitis sunt ipsa eveniet consectetur nisi corrupti,
         dolorem mollitia est illo unde explicabo enim laborum molestias natus
@@ -50,14 +52,33 @@
         optio, animi doloremque quia maiores.
       </p>
     </div>
-    <div class="skills" id="skills">
+    <div class="skills animate" id="skills">
       <h2>Skills</h2>
       <ul>
         <li>Coding</li>
         <li>Designing</li>
       </ul>
     </div>
-    <footer id="contact">
+    <div class="projects animate" id="projects">
+      <h1>Projects</h1>
+      <div class="cards">
+        <div class="card">
+          <div class="thumbnail-image">
+            <img src="https://sanjaysanthosh.me/assets/imgs/shoeshopping.png" alt="">
+          </div>
+          <h3>shoeshopping</h3>
+          <button class="button">
+            <div class="button-overlay"></div>
+            <span><a href="">View Now</a> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 53 58" height="58" width="53">
+          <path stroke-width="9" stroke="currentColor" d="M44.25 36.3612L17.25 51.9497C11.5833 55.2213 4.5 51.1318 4.50001 44.5885L4.50001 13.4115C4.50001 6.86824 11.5833 2.77868 17.25 6.05033L44.25 21.6388C49.9167 24.9104 49.9167 33.0896 44.25 36.3612Z"></path>
+          </svg></span>
+            
+          </button>
+        </div>
+        
+      </div>
+    </div>
+    <footer id="contact" class="animate">
       <div class="top-footer">
         <h2>Contact</h2>
         <div class="contact">
@@ -70,15 +91,56 @@
         </div>
       </div>
       <div class="bottom-footer">
-        <p>Created By Sanjay Santhosh</p>
+        <p>Created By <i class="fa-regular fa-copyright"></i> Sanjay Santhosh</p>
       </div>
     </footer>
     <script>
-      const burger = document.querySelector(".fa-bars");
-      const nav = document.querySelector("nav ul");
-      burger.addEventListener("click", () => {
-        nav.classList.toggle("active");
-      });
+ document.addEventListener("DOMContentLoaded", function () {
+  const navLinks = document.querySelectorAll("nav a");
+  const burger = document.querySelector(".fa-bars");
+  const nav = document.querySelector("nav ul");
+
+  burger.addEventListener("click", () => {
+    nav.classList.toggle("active");
+  });
+
+  navLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href").substring(1); // Remove the "#" symbol
+      const targetElement = document.getElementById(targetId);
+
+      if (targetElement) {
+        const offset = targetElement.offsetTop;
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth"
+        });
+
+        // Remove the "active" class from the navigation
+        nav.classList.remove("active");
+      }
+    });
+  });
+
+  const animatedElements = document.querySelectorAll(".animate");
+
+function checkScroll() {
+  animatedElements.forEach((element) => {
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+      element.classList.add("animate-active");
+    } else {
+      element.classList.remove("animate-active");
+    }
+  });
+}
+
+checkScroll(); // Initial check when the page loads
+
+window.addEventListener("scroll", checkScroll);
+});
+
     </script>
   </body>
 </html>

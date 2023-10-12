@@ -24,7 +24,9 @@
         <h2>Login</h2>
 
         <form class="form" action="/login" method="post">
-
+          <% if (error!=="") { %>
+            <p style="color:#fff;"><%=error%></p>
+          <% } %>
           <div class="inputBox">
 
             <input type="text" name="username" required> <i>Username</i>

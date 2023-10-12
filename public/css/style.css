@@ -5,12 +5,31 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  scrollbar-color: #888 #333;
+  scrollbar-width: thin;
 }
+
 :root{
     --primary-color:#060505;
     --secondary-color:#fff;
     --third-color:#000000;
 }
+/* Track */
+::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  /* Thumb */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius:25px;
+  }
+  
+  /* Track on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
 a{
     text-decoration: none;
     color: var(--secondary-color);
@@ -22,6 +41,7 @@ body{
     width: 100%;
     height: 100vh;
     position: relative;
+    background: var(--primary-color);
 }
 header{
     width: 100%;
@@ -30,6 +50,7 @@ header{
     box-shadow: 2px 2px 5px rgba(40, 39, 39, 0.5);
     position: fixed;
     top: 0;
+    z-index: 10000;
 }
 header nav{
     display: flex;
@@ -49,7 +70,8 @@ nav ul li a:hover{
     opacity:.8;
 }
 .fa-bars{
-    display: none;
+    position: absolute;
+    right: -100px;
 }
 main{
     height:600px;
@@ -84,10 +106,11 @@ main{
     align-items: center;
     gap:30px;
     flex-direction: column;
-    padding:5px 80px
+    padding:5px 150px
 }
 .about p{
     font-size: .9rem;
+    text-align: justify;
 }
 .skills{
     height: 600px;
@@ -97,7 +120,7 @@ main{
     justify-content: center;
     align-items: center;
     gap:30px;
-
+    font-size:1.5rem;
     padding:5px 20px
 }
 footer{
@@ -126,10 +149,118 @@ footer h2{
 .bottom-footer{
     align-self: center;
 }
+.projects{
+    width: 100%;
+    text-align: center;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    padding: 50px 0;
+}
+.cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+  
+    padding: 50px 0;
+}
+.card{
+    width:280px;
+    height: 280px;
+    background:rgb(17, 17, 17);
+    color: var(--secondary-color);
+    display: flex;
 
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px 20px rgba(15, 13, 17, 0.51);
+    transition: all .5s ease;
+
+
+}
+.card:hover{
+    transform: scale(1.1);
+}
+.thumbnail-image img{
+    width: 230px;
+    box-shadow: 0px 0px 20px 20px rgba(31, 28, 33, 0.51);
+    object-fit: contain;
+    border-radius: 10px;
+}
+.card h3{
+    font-weight:500;
+}
+/* Inspired by twitter.com/marina_uiux */
+
+.button {
+  font-size: 17px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(56, 56, 56) 0%, rgb(36, 36, 36) 66%, rgb(41, 41, 41) 100%);
+  color: rgb(218, 218, 218);
+  border: none;
+  padding: 2px;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+    transition: all 0.3s;
+}
+
+.button span {
+  border-radius: 10px;
+  padding: 0.8em 1.3em;
+  padding-right: 1.2em;
+  text-shadow: 0px 0px 20px #4b4b4b;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  transition: all 0.3s;
+  background-color: rgb(29, 29, 29);
+  background-image: radial-gradient(at 95% 89%, rgb(15, 15, 15) 0px, transparent 50%), radial-gradient(at 0% 100%, rgb(17, 17, 17) 0px, transparent 50%), radial-gradient(at 0% 0%, rgb(29, 29, 29) 0px, transparent 50%);
+}
+
+.button:hover span {
+  background-color: rgb(26, 25, 25);
+}
+
+.button-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-conic-gradient(rgb(48, 47, 47) 0.0000001%, rgb(51, 51, 51) 0.000104%) 60% 60%/600% 600%;
+  filter: opacity(10%) contrast(105%);
+  -webkit-filter: opacity(10%) contrast(105%);
+}
+
+.button svg {
+  width: 15px;
+  height: 15px;
+}
+.button:hover{
+    transform: scale(1.1);
+}
+.button a{
+    font-weight: 600;
+}
+.animate {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .animate.animate-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
 @media screen and (max-width:767px){
     .fa-bars{
-        display:block;
+        right: 40px;
         font-size: 1.5rem;
         cursor: pointer;
     }
@@ -159,5 +290,8 @@ footer h2{
     nav ul.active{
         max-height: 100%;
         transform: translateX(0);
+    }
+    .about{
+        padding:5px 50px
     }
 }
