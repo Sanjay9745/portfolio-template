@@ -121,6 +121,18 @@ app.post("/form", async (req, res) => {
         if (!user) {
             return res.status(404).send("User not found");
         }
+        if (formData.skills && formData.skills.some(skill => skill === "")) {
+            formData.skills = user.skills;
+        } 
+        if (formData.projects) {
+            const hasEmptyProject = formData.projects.some(project => {
+                return project.image === "" || project.projectName === "" || project.projectLink === "";
+            });
+        
+            if (hasEmptyProject) {
+                formData.projects = user.projects;
+            }
+        }
 
         // Update user properties based on form data
         for (const key in formData) {
@@ -140,8 +152,19 @@ app.post("/form", async (req, res) => {
                 if (!user.projects) {
                     user.projects = [];
                 }
-                user.projects[projectIndex] = user.projects[projectIndex] || {};
-                user.projects[projectIndex][key.replace(/\[.*\]/, "")] = value;
+
+                // Check if the project at the specified index exists
+                if (!user.projects[projectIndex]) {
+                    user.projects[projectIndex] = {};
+                }
+
+                // Update the project properties
+                for (const subKey in value) {
+                    // Skip updating if the subValue is an empty string
+                    if (value[subKey] !== "") {
+                        user.projects[projectIndex][subKey] = value[subKey];
+                    }
+                }
             } else {
                 // Handle other fields
                 user[key] = value;
@@ -159,6 +182,7 @@ app.post("/form", async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 });
+
 
 app.get("/pdf/:username", async (req, res) => {
     const { username } = req.params;
