@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
 	background-color: #444442;
 	padding-top: 85px;
+	font-family: "Poppins", sans-serif, "arial";
+	width:100%;
+	height:100vh;
 }
-
+button{
+	font-family: "Poppins", sans-serif, "arial";
+}
+a{
+	text-decoration: none;
+	color: #867d7d;
+	font-family: "Poppins", sans-serif, "arial";
+}
 h1 {
 	font-family: "Poppins", sans-serif, "arial";
 	font-weight: 600;
@@ -18,7 +30,9 @@ h4 {
 	color: #9b9b9b;
 	line-height: 1.5;
 }
-
+input{
+	font-family: "Popppins", sans-serif, "arial";
+}
 /* ///// inputs /////*/
 
 input:focus ~ label,
@@ -95,8 +109,12 @@ textarea {
 	max-width: 100%;
 	margin: 20px auto 25px auto;
 }
-
+.row{
+	text-align: center;
+	color: rgb(190, 192, 194);
+}
 .submit-btn {
+	
 	float: right;
 	padding: 7px 35px;
 	border-radius: 60px;
@@ -114,7 +132,21 @@ textarea {
 	transform: translateY(1px);
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.09);
 }
-
+.minimal-button {
+	background-color: transparent;
+	border: 2px solid #8b8686; /* Border color */
+	color: #867d7d; /* Text color */
+	padding: 10px 20px; /* Adjust padding as needed */
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  }
+  
+  .minimal-button:hover {
+	background-color: #333; /* Background color on hover */
+	color: #fff; /* Text color on hover */
+	transform: scale(1.05); /* Scale the button on hover (optional) */
+  }
 @media (max-width: 768px) {
 	.submit-btn {
 		width: 100%;
@@ -131,4 +163,7 @@ input[type="checkbox"] + label {
 input[type="checkbox"]:checked + label {
 	color: #f00;
 	font-style: normal;
+}
+.bottom{
+	color: #fff;
 }

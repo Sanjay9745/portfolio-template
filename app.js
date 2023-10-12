@@ -54,7 +54,7 @@ const auth = (req, res, next) => {
 }
 
 app.get("/",auth,(req,res)=>{
-    res.render("form")
+    res.render("form",{username:req.session.username})
 })
 app.get("/login",(req,res)=>{
     res.render("login",{error:""})
@@ -149,7 +149,7 @@ app.post("/form", async (req, res) => {
 
         // Save the updated user data to the database
         await user.save();
-
+       
         res.redirect("/" + req.session.username);
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
@@ -197,6 +197,8 @@ app.get("/pdf/:username", async (req, res) => {
       });
     });
   });
+
+  
   const customCss = fs.readFileSync('public/css/style.css', 'utf8');
 
   // Your route to generate and send HTML to the user

@@ -9,8 +9,16 @@
 </head>
 <body>
     <div class="container">
+
+ 
         <div class="row">
+            
             <h4 style="text-align:center">We'd love to hear from you!</h4>
+            <p>Submit the form once and comeback and Download your website</p>
+            <button class="minimal-button">
+    
+                <a href="/generate/<%=username %>">Download</a>
+            </button>
         </div>
         <form action="/form" method="post" class="row input-container">
             <div class="col-xs-12">
@@ -34,8 +42,8 @@
                     </div>
                 </div>
             </div>
-            <button class="add-skill-btn">+</button>
-            <button class="remove-skill-btn">-</button>
+            <button class="add-skill-btn minimal-button">+</button>
+            <button class="remove-skill-btn minimal-button">-</button>
             <div class="projects-section">
                 <div class="project-card col-xs-12">
                     <h2>Project 1</h2>
@@ -53,8 +61,8 @@
                     </div>
                 </div>
             </div>
-            <button class="add-project-btn">Add Project</button>
-            <button class="remove-project-btn">Remove Project</button>
+            <button class="add-project-btn minimal-button">Add Project</button>
+            <button class="remove-project-btn minimal-button">Remove Project</button>
             <div class="col-xs-12">
                 <div class="styled-input wide">
                     <textarea required name="about"></textarea>
@@ -82,8 +90,13 @@
             <div class="col-xs-12">
                 <input type="submit" value="Submit" class="btn-lrg submit-btn">
             </div>
+           
+    
+           
+         
+        </div>
         </form>
-    </div>
+
 
     <script>
         const addSkillButton = document.querySelector('.add-skill-btn');
