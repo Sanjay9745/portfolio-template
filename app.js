@@ -80,7 +80,10 @@ app.post("/register",async(req,res)=>{
         const hashedPassword = await bcrypt.hash(password,salt);
         const newUser = new User({username,password:hashedPassword});
         await newUser.save();
-        res.redirect("/login")
+
+        req.session.username = username;
+        res.redirect("/");
+
     } catch (error) {
         res.status(500).json({message:"Something went wrong"})
     }
