@@ -23,13 +23,13 @@
         <form action="/form" method="post" class="row input-container">
             <div class="col-xs-12">
                 <div class="styled-input wide">
-                    <input type="text" required name="logo"/>
+                    <input type="text"  name="logo"/>
                     <label>Logo Name</label>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="styled-input wide">
-                    <input type="text" required name="name"/>
+                    <input type="text"  name="name"/>
                     <label>Name</label>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                 <!-- Keep skill input as is -->
                 <div class="col-xs-12">
                     <div class="styled-input wide">
-                        <input type="text" required name="skills[]" />
+                        <input type="text" name="skills[]" />
                         <label>Skill</label>
                     </div>
                 </div>
@@ -48,15 +48,15 @@
                 <div class="project-card col-xs-12">
                     <h2>Project 1</h2>
                     <div class="styled-input wide">
-                        <input type="text" required name="projects[0][image]" />
+                        <input type="text"  name="projects[0][image]" />
                         <label>Image URL</label>
                     </div>
                     <div class="styled-input wide">
-                        <input type="text" required name="projects[0][projectName]" />
+                        <input type="text"  name="projects[0][projectName]" />
                         <label>Project Name</label>
                     </div>
                     <div class="styled-input wide">
-                        <input type="text" required name="projects[0][projectLink]" />
+                        <input type="text"  name="projects[0][projectLink]" />
                         <label>Project Link</label>
                     </div>
                 </div>
@@ -65,25 +65,25 @@
             <button class="remove-project-btn minimal-button">Remove Project</button>
             <div class="col-xs-12">
                 <div class="styled-input wide">
-                    <textarea required name="about"></textarea>
+                    <textarea name="about"></textarea>
                     <label>About</label>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="styled-input">
-                    <input type="email" name="email" required />
+                    <input type="email" name="email"  />
                     <label>Email</label>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="styled-input" style="float:right;">
-                    <input type="text" required name="phone"/>
+                    <input type="text"  name="phone"/>
                     <label>Phone Number</label>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="styled-input wide" style="float:right;">
-                    <input type="text" required name="cvLink"/>
+                    <input type="text"  name="cvLink"/>
                     <label>CV Link</label>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                 skillInput.className = 'col-xs-12';
                 skillInput.innerHTML = `
                     <div class="styled-input wide">
-                        <input type="text" required name="skills[]" />
+                        <input type="text"  name="skills[]" />
                         <label>Skill</label>
                     </div>
                 `;
@@ -137,15 +137,15 @@
             projectCard.innerHTML = `
                 <h2>Project ${projectCounter}</h2>
                 <div class="styled-input wide">
-                    <input type="text" required name="projects[${projectCounter}][image]" />
+                    <input type="text" name="projects[${projectCounter}][image]" />
                     <label>Image URL</label>
                 </div>
                 <div class="styled-input wide">
-                    <input type="text" required name="projects[${projectCounter}][projectName]" />
+                    <input type="text" name="projects[${projectCounter}][projectName]" />
                     <label>Project Name</label>
                 </div>
                 <div class="styled-input wide">
-                    <input type="text" required name="projects[${projectCounter}][projectLink]" />
+                    <input type="text"  name="projects[${projectCounter}][projectLink]" />
                     <label>Project Link</label>
                 </div>
             `;
