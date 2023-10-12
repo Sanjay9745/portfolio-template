@@ -124,11 +124,16 @@ app.post("/form", async (req, res) => {
 
         // Update user properties based on form data
         for (const key in formData) {
+            const value = formData[key];
+
+            // Skip updating if the value is an empty string
+            if (value === "") {
+                continue;
+            }
+
             if (key === "skills") {
                 // Handle skills as an array
-                user.skills = Array.isArray(formData.skills)
-                    ? formData.skills
-                    : [formData.skills];
+                user.skills = Array.isArray(value) ? value : [value];
             } else if (key.startsWith("projects[")) {
                 // Handle projects as an array of objects
                 const projectIndex = key.match(/\d+/)[0];
@@ -136,11 +141,10 @@ app.post("/form", async (req, res) => {
                     user.projects = [];
                 }
                 user.projects[projectIndex] = user.projects[projectIndex] || {};
-                user.projects[projectIndex][key.replace(/\[.*\]/, "")] =
-                    formData[key];
+                user.projects[projectIndex][key.replace(/\[.*\]/, "")] = value;
             } else {
                 // Handle other fields
-                user[key] = formData[key];
+                user[key] = value;
             }
         }
 
@@ -155,6 +159,7 @@ app.post("/form", async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 });
+
 app.get("/pdf/:username", async (req, res) => {
     const { username } = req.params;
     const user = await User.findOne({ username });
